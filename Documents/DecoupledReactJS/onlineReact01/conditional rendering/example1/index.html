@@ -17,23 +17,24 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      function MyClock() {
-        let now = new Date().toLocaleString();
+      function getNumber() {
+        const myArr = [10, 5, 12, 6, 9, 21, 34, 7, 90];
+        const num = myArr[Math.floor(Math.random() * myArr.length)];
+        return num;
+      }
+
+      function MyApp() {
+        const num = getNumber();
         return (
-          <div className="test">
-            <h2>My Clock Component</h2>
-            <p>Current date and time are {now}</p>
+          <div>
+            <p> Number is {num} </p>
+            <small>It is an {num % 2 == 0 ? "Even" : "odd"} number</small>
           </div>
         );
       }
       let myDiv = document.querySelector("#root");
-      function ticks() {
-        ReactDOM.render(<MyClock />, myDiv);
-      }
 
-      setInterval(function () {
-        ReactDOM.render(<MyClock />, myDiv);
-      }, 1000);
+      ReactDOM.render(<MyApp />, myDiv);
     </script>
   </body>
 </html>
