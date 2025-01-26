@@ -25,13 +25,15 @@
 
       function MyApp() {
         const num = getNumber();
+        let x = 88;
         return (
           <div>
             <p> Number is {num} </p>
             <small>
               {num % 2 == 0 ? (
                 <span>
-                  It is <b>Even</b> number
+                  It is <b>Even</b>
+                  {x} number
                 </span>
               ) : (
                 <b>{null}</b>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rest Example 1</title>
+    <script>
+      function add(...args) {
+        let sum = 0;
+        for (let x of args) {
+          sum = sum + x;
+        }
+
+        document.writeln(`sum = ${sum}`);
+      }
+
+      add(10, 20);
+      add(10, 20, 30);
+      add(10, 20, 30, 40);
+      add(10, 20, 30, 40, 50);
+    </script>
+  </head>
+  <body></body>
+</html>

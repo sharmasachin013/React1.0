@@ -17,26 +17,24 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      function Greeting() {
-        const currentHour = new Date().getHours();
-        let greetingMessage;
+      function getNumber() {
+        const myArr = [10, 5, 12, 6, 9, 21, 34, 7, 90];
+        const num = myArr[Math.floor(Math.random() * myArr.length)];
+        return num;
+      }
 
-        if (currentHour < 12) {
-          greetingMessage = "Good Morning";
-        } else if (currentHour < 18) {
-          greetingMessage = "Good Afternoon!";
-        } else {
-          greetingMessage = "Good Evening!";
-        }
+      function MyApp() {
+        const num = getNumber();
+        let x;
         return (
           <div>
-            <h1>{greetingMessage}</h1>
+            <p> Number is {num} </p>
+            {num % 2 == 0 && <small>It is an Even number</small>}
           </div>
         );
       }
-
       let myDiv = document.querySelector("#root");
-      ReactDOM.render(<Greeting />, myDiv);
+      ReactDOM.render(<MyApp />, myDiv);
     </script>
   </body>
 </html>

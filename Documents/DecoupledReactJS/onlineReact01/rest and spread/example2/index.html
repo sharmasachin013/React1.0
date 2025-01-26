@@ -1,0 +1,24 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rest Example 1</title>
+    <script>
+      function marksheet(name, ...marks) {
+        let sum = 0;
+        for (let x of marks) {
+          sum = sum + x;
+        }
+
+        document.writeln(`Student Name = ${name}, Total marks:${sum}`);
+      }
+
+      // marksheet("sachin", 20, 30);
+      marksheet(20, 30, "sachin");
+      // marksheet("Naveen", 20, 30, 50, 70);
+      // marksheet(10, 20, 30, 40);
+      //  marksheet(10, 20, 30, 40, 50);
+    </script>
+  </head>
+  <body></body>
+</html>
