@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Todo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background: #ff7e5f;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .edit,
+        .delete {
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .edit {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .delete {
+            background: #FF5252;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        li div {
+    display: flex;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Todo App</h1>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new task..." required>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul id="todo-list"></ul>
+    </div>
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h2>Edit Task</h2>
+            <form id="edit-form">
+                <input type="text" id="edit-input" required>
+                <button type="submit">Update Task</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const todoForm = document.getElementById('todo-form');
+        const todoInput = document.getElementById('todo-input');
+        const todoList = document.getElementById('todo-list');
+        const editModal = document.getElementById('edit-modal');
+        const editInput = document.getElementById('edit-input');
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
+        let editIndex = null;
+
+        function renderTodos() {
+            todoList.innerHTML = '';
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.className = todo.completed ? 'completed' : '';
+                li.innerHTML = `
+                    <span onclick="toggleStatus(${index})">${todo.text}</span>
+                    <div>
+                        <button class="edit" onclick="openEditForm(${index})">Edit</button>
+                        <button class="delete" onclick="deleteTask(${index})">Delete</button>
+                    </div>
+                `;
+                todoList.appendChild(li);
+            });
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function addTask(event) {
+            event.preventDefault();
+            todos.push({ text: todoInput.value, completed: false });
+            todoInput.value = '';
+            renderTodos();
+        }
+
+        function deleteTask(index) {
+            todos.splice(index, 1);
+            renderTodos();
+        }
+
+        function toggleStatus(index) {
+            todos[index].completed = !todos[index].completed;
+            renderTodos();
+        }
+
+        function openEditForm(index) {
+            editIndex = index;
+            editInput.value = todos[index].text;
+            editModal.style.display = 'flex';
+        }
+
+        document.getElementById('edit-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            todos[editIndex].text = editInput.value;
+            editModal.style.display = 'none';
+            renderTodos();
+        });
+
+        window.onclick = function (event) {
+            if (event.target === editModal) {
+                editModal.style.display = 'none';
+            }
+        }
+
+        todoForm.addEventListener('submit', addTask);
+        renderTodos();
+    </script>
+</body>
+
+</html>
