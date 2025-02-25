@@ -10,7 +10,7 @@ function AddTodo(props) {
       setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
       localStorage.setItem("todosone", JSON.stringify(todos));
       setNewTodo("");
-      console.log(todos);
+      // console.log(todos);
     }
   };
   return (
